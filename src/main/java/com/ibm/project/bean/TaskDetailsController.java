@@ -39,6 +39,12 @@ public class TaskDetailsController {
 		services.updateTaskWithTaskOwner(task,taskOwner);
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/status/{taskOwner}")
+	void updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskOwner) {
+		
+		services.updateTaskStatus(task,taskOwner);
+	}
+	
 	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskOwner}")
 	void deleteTaskWithTaskOwner(@PathVariable String taskOwner) {
 		services.deleteTaskWithTaskOwner(taskOwner);

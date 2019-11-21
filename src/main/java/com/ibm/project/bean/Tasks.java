@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Tasks {
 	
 	String projectName,taskName,taskOwner,taskDetails;
-	String startDate,endDate;
+	String startDate,endDate,status;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
@@ -24,6 +24,13 @@ public class Tasks {
 		this.taskDetails = taskDetails;
 		this.startDate = startDate;
 		this.endDate = endDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getProjectName() {
 		return projectName;

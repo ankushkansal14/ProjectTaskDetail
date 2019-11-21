@@ -31,13 +31,20 @@ public class TaskDetailsServices {
 		String taskName=tasks.getTaskName();
 		String taskDetails=tasks.getTaskDetails();
 		String endDate=tasks.getEndDate();
-		 repo.updateTaskWithTaskOwner(taskName,taskDetails,endDate,taskOwner);
+		String taskOwnr=tasks.getTaskOwner();
+		repo.updateTaskWithTaskOwner(taskName,taskDetails,endDate,taskOwnr,taskOwner);
 		
 	}
 
 	public void deleteTaskWithTaskOwner(String taskOwner) {
 		repo.deleteTaskWithTaskOwner(taskOwner);
 		
+	}
+
+	public void updateTaskStatus(Tasks task, String taskOwner) {
+		// TODO Auto-generated method stub
+		String taskStatus="Complete";
+		repo.updateStatus(taskStatus,taskOwner);
 	}
 
 }

@@ -21,12 +21,21 @@ public interface TaskDetailsRepo extends CrudRepository<Tasks, Integer> {
 	@Modifying
 	@Transactional
 	@Query(value = "update tasks set task_name = :taskName,task_details = :taskDetails"
-			+ ",end_date = :endDate WHERE task_owner = :taskOwner", nativeQuery = true)
+			+ ",end_date = :endDate,task_owner = :taskOwnr "
+			+ "WHERE task_owner = :taskOwner", nativeQuery = true)
 	void updateTaskWithTaskOwner(@Param(value = "taskName") String taskName,
 								@Param(value = "taskDetails") String taskDetails,
 								@Param(value = "endDate") String endDate,
+								@Param(value = "taskOwnr") String taskOwnr,
 								@Param(value = "taskOwner") String taskOwner
 								
+								
 								);
+
+	@Modifying
+	@Transactional
+	@Query(value = "update tasks set status=:taskStatus "
+			+ "WHERE task_owner = :taskOwner", nativeQuery = true)
+	void updateStatus(@Param(value="taskStatus")String taskStatus, @Param(value="taskOwner")String taskOwner);
 
 }
