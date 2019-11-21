@@ -77,12 +77,7 @@ public class Tasks {
 	public void setId(int id) {
 		this.id = id;
 	}
-	@Override
-	public String toString() {
-		return "Tasks [projectName=" + projectName + ", taskName=" + taskName + ", taskOwner=" + taskOwner
-				+ ", taskDetails=" + taskDetails + ", startDate=" + startDate + ", endDate=" + endDate + ", id=" + id
-				+ "]";
-	}
+	
 	
 	
 
