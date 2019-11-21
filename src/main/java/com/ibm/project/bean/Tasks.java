@@ -25,10 +25,6 @@ public class Tasks {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
-<<<<<<< Upstream, based on origin/master
-	
-=======
->>>>>>> 3982003 Created Proper Packages
 	public String getStatus() {
 		return status;
 	}
