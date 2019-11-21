@@ -26,7 +26,6 @@ public class TaskDetailsController {
 	
 	@RequestMapping(method = RequestMethod.POST,value = "/tasks")
 	void addTask(@RequestBody Tasks task) {
-		task.toString();
 		services.addTask(task);
 	}
 
@@ -36,17 +35,21 @@ public class TaskDetailsController {
 		return services.getTaskByProjectName(projectName);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/{taskOwner}")
-	void updateTaskWithTaskOwner(@RequestBody Tasks task,@PathVariable String taskOwner) {
+	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/{taskTitle}")
+	void updateTaskWithTaskTitle(@RequestBody Tasks task,@PathVariable String taskTitle) {
 		
-		services.updateTaskWithTaskOwner(task,taskOwner);
+		services.updateTaskWithTaskOwner(task,taskTitle);
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/status/{taskTitle}")
+	void updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskTitle) {
+		
+		services.updateTaskStatus(task,taskTitle);
+	}
 	
-	
-	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskOwner}")
-	void deleteTaskWithTaskOwner(@PathVariable String taskOwner) {
-		services.deleteTaskWithTaskOwner(taskOwner);
+	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskTitle}")
+	void deleteTaskWithTaskOwner(@PathVariable String taskTitle) {
+		services.deleteTaskWithTaskOwner(taskTitle);
 	}
 	
 }

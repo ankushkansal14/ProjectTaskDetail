@@ -21,6 +21,7 @@ public class TaskDetailsServices {
 	}
 
 	public void addTask(Tasks task) {
+		task.setStatus("");
 		repo.save(task);
 		
 	}
@@ -30,17 +31,23 @@ public class TaskDetailsServices {
 		
 	}
 
-	public void updateTaskWithTaskOwner(Tasks tasks,String taskOwner) {
-		String taskName=tasks.getTaskName();
+	public void updateTaskWithTaskOwner(Tasks tasks,String taskTitle) {
 		String taskDetails=tasks.getTaskDetails();
 		String endDate=tasks.getEndDate();
-		 repo.updateTaskWithTaskOwner(taskName,taskDetails,endDate,taskOwner);
+		String taskOwnr=tasks.getTaskOwner();
+		repo.updateTaskWithTaskOwner(taskDetails,endDate,taskOwnr,taskTitle);
 		
 	}
 
-	public void deleteTaskWithTaskOwner(String taskOwner) {
-		repo.deleteTaskWithTaskOwner(taskOwner);
+	public void deleteTaskWithTaskOwner(String taskTitle) {
+		repo.deleteTaskWithTaskOwner(taskTitle);
 		
+	}
+
+	public void updateTaskStatus(Tasks task, String taskTitle) {
+		// TODO Auto-generated method stub
+		String taskStatus="Complete";
+		repo.updateStatus(taskStatus,taskTitle);
 	}
 
 }

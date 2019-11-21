@@ -17,18 +17,26 @@ public interface TaskDetailsRepo extends CrudRepository<Tasks, Integer> {
 
 	@Modifying
 	@Transactional
-	@Query(value = "delete from tasks where task_owner= :taskOwner", nativeQuery = true)
-	void deleteTaskWithTaskOwner(@Param(value = "taskOwner") String taskOwner);
+	@Query(value = "delete from tasks where task_name= :taskTitle", nativeQuery = true)
+	void deleteTaskWithTaskOwner(@Param(value = "taskTitle") String taskTitle);
 
 	@Modifying
 	@Transactional
-	@Query(value = "update tasks set task_name = :taskName,task_details = :taskDetails"
-			+ ",end_date = :endDate WHERE task_owner = :taskOwner", nativeQuery = true)
-	void updateTaskWithTaskOwner(@Param(value = "taskName") String taskName,
-								@Param(value = "taskDetails") String taskDetails,
+	@Query(value = "update tasks set task_details = :taskDetails"
+			+ ",end_date = :endDate,task_owner = :taskOwnr "
+			+ "WHERE task_name = :taskTitle", nativeQuery = true)
+	void updateTaskWithTaskOwner(@Param(value = "taskDetails") String taskDetails,
 								@Param(value = "endDate") String endDate,
-								@Param(value = "taskOwner") String taskOwner
+								@Param(value = "taskOwnr") String taskOwnr,
+								@Param(value = "taskTitle") String taskTitle
+								
 								
 								);
+
+	@Modifying
+	@Transactional
+	@Query(value = "update tasks set status=:taskStatus "
+			+ "WHERE task_name = :taskTitle", nativeQuery = true)
+	void updateStatus(@Param(value="taskStatus")String taskStatus, @Param(value="taskTitle")String taskTitle);
 
 }
