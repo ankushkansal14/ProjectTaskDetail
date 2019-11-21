@@ -17,7 +17,7 @@ public class Tasks {
 		
 	}
 	public Tasks(String projectName, String taskName, String taskOwner, String taskDetails, String startDate,
-			String endDate) {
+			String endDate,String status) {
 		this.projectName = projectName;
 		this.taskName = taskName;
 		this.taskOwner = taskOwner;
@@ -25,7 +25,10 @@ public class Tasks {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+<<<<<<< Upstream, based on origin/master
 	
+=======
+>>>>>>> 3982003 Created Proper Packages
 	public String getStatus() {
 		return status;
 	}
