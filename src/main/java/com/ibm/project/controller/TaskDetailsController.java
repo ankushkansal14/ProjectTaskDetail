@@ -30,12 +30,13 @@ public class TaskDetailsController {
 	@Autowired
 	RestTemplate restTemp;
 	
-	@ApiOperation(value = "Get The Tasks" , notes = "hit this url to get all tasks",response = List.class)
+	@ApiOperation(value = "Get Tasks" , notes = "hit this url to get all tasks",response = List.class)
 	@RequestMapping("/tasks")
 	Iterable<Tasks> getAllTasks(){
 		return services.getAllTasks();
 	}
 	
+	@ApiOperation(value = "Add Tasks" , notes = "hit this url to add task",response = List.class)
 	@RequestMapping(method = RequestMethod.POST,value = "/tasks")
 	void addTask(@RequestBody Tasks task) {
 		services.addTask(task);
@@ -43,24 +44,27 @@ public class TaskDetailsController {
 		restTemp.postForObject("http://localhost:8787/emp_stat", task, String.class);
 	}
 
-	
+	@ApiOperation(value = "Get Tasks By Project Name" , notes = "hit this url to get Projects",response = List.class)
 	@RequestMapping("/tasks/{projectName}")
 	Iterable<Tasks> getTaskByProjectName(@PathVariable String projectName){
 		return services.getTaskByProjectName(projectName);
 	}
 	
+	@ApiOperation(value = "Update Task with Task Owner" , notes = "hit this url to update task by task owner",response = List.class)
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/{taskTitle}")
 	void updateTaskWithTaskTitle(@RequestBody Tasks task,@PathVariable String taskTitle) {
 		
 		services.updateTaskWithTaskOwner(task,taskTitle);
 	}
 	
+	@ApiOperation(value = "Update Task with Employee" , notes = "hit this url to update task with employee",response = List.class)
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks")
 	void updateTaskWithDeleteEmployee(@RequestBody String employeeName) {
 		
 		services.updateTaskWithDeleteEmployee(employeeName);
 	}
 	
+	@ApiOperation(value = "Update Task Status" , notes = "hit this url to update task",response = List.class)
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/status/{taskTitle}")
 	void updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskTitle) {
 		
@@ -69,6 +73,7 @@ public class TaskDetailsController {
 		restTemp.put("http://localhost:8787/emp_stat/completetask", task);
 	}
 	
+	@ApiOperation(value = "Delete Task with Task Owner" , notes = "hit this url to delete task with task owner",response = List.class)
 	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskTitle}")
 	void deleteTaskWithTaskOwner(@PathVariable String taskTitle) {
 		String projectName=services.findProjectName(taskTitle);
