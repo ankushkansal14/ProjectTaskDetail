@@ -1,5 +1,6 @@
 package com.ibm.project.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import com.ibm.project.bean.Tasks;
 import com.ibm.project.service.TaskDetailsServices;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value = "Task Details" , description = "CONTAINS API FOR TaskDetails")
 
 public class TaskDetailsController {
 	
@@ -23,6 +28,7 @@ public class TaskDetailsController {
 	@Autowired
 	RestTemplate restTemp;
 	
+	@ApiOperation(value = "Get The Events" , notes = "hit this url to get all events",response = List.class)
 	@RequestMapping("/tasks")
 	Iterable<Tasks> getAllTasks(){
 		return services.getAllTasks();
