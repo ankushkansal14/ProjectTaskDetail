@@ -15,9 +15,11 @@ import com.ibm.project.bean.Tasks;
 import com.ibm.project.service.TaskDetailsServices;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+
 @Api(value = "Task Details" , description = "CONTAINS API FOR TaskDetails")
 
 public class TaskDetailsController {
@@ -28,7 +30,7 @@ public class TaskDetailsController {
 	@Autowired
 	RestTemplate restTemp;
 	
-	@ApiOperation(value = "Get The Events" , notes = "hit this url to get all events",response = List.class)
+	@ApiOperation(value = "Get The Tasks" , notes = "hit this url to get all tasks",response = List.class)
 	@RequestMapping("/tasks")
 	Iterable<Tasks> getAllTasks(){
 		return services.getAllTasks();

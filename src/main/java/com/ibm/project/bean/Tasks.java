@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModel;
+
 @Entity
+@ApiModel
 public class Tasks {
 	
 	String projectName,taskName,taskOwner,taskDetails;

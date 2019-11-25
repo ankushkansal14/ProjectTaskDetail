@@ -33,7 +33,7 @@ public class ProjectTaskDetailApplication {
 	Docket configureSwagger() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.paths(PathSelectors.ant("/app/**"))
+				.paths(PathSelectors.ant("/**"))
 				.build()
 				
 				.apiInfo(new ApiInfo("User API Documentation", 
