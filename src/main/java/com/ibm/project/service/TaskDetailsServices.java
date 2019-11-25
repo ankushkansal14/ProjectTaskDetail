@@ -50,4 +50,14 @@ public class TaskDetailsServices {
 		repo.updateStatus(taskStatus,taskTitle);
 	}
 
+	public void updateTaskWithDeleteEmployee(String employeeName) {
+		// TODO Auto-generated method stub
+		repo.updateTaskWithDeleteEmployee(employeeName);
+	}
+
+	public String findProjectName(String taskTitle) {
+		// TODO Auto-generated method stub
+		return repo.findProjectName(taskTitle);
+	}
+
 }

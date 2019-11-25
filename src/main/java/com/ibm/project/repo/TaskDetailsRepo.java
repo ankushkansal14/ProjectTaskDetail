@@ -39,4 +39,12 @@ public interface TaskDetailsRepo extends CrudRepository<Tasks, Integer> {
 			+ "WHERE task_name = :taskTitle", nativeQuery = true)
 	void updateStatus(@Param(value="taskStatus")String taskStatus, @Param(value="taskTitle")String taskTitle);
 
+	@Modifying
+	@Transactional
+	@Query(value = "update tasks set task_owner='Not assigned' where task_owner=:employeeName and status=''", nativeQuery = true)
+	void updateTaskWithDeleteEmployee(@Param(value = "employeeName")String employeeName);
+
+	@Query(value = "select project_name from tasks where task_name=:taskTitle",nativeQuery = true)
+	String findProjectName(@Param(value = "taskTitle")String taskTitle);
+
 }

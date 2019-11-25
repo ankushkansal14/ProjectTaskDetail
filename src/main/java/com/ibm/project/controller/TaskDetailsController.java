@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.ibm.project.bean.Tasks;
 import com.ibm.project.service.TaskDetailsServices;
@@ -19,6 +20,9 @@ public class TaskDetailsController {
 	@Autowired
 	TaskDetailsServices services;
 	
+	@Autowired
+	RestTemplate restTemp;
+	
 	@RequestMapping("/tasks")
 	Iterable<Tasks> getAllTasks(){
 		return services.getAllTasks();
@@ -27,6 +31,8 @@ public class TaskDetailsController {
 	@RequestMapping(method = RequestMethod.POST,value = "/tasks")
 	void addTask(@RequestBody Tasks task) {
 		services.addTask(task);
+		restTemp.put("http://localhost:8787/project",task);
+		restTemp.postForObject("http://localhost:8787/emp_stat", task, String.class);
 	}
 
 	
@@ -41,15 +47,25 @@ public class TaskDetailsController {
 		services.updateTaskWithTaskOwner(task,taskTitle);
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT,value = "/tasks")
+	void updateTaskWithDeleteEmployee(@RequestBody String employeeName) {
+		
+		services.updateTaskWithDeleteEmployee(employeeName);
+	}
+	
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/status/{taskTitle}")
 	void updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskTitle) {
 		
 		services.updateTaskStatus(task,taskTitle);
+		restTemp.put("http://localhost:8787/project/completetask", task);
+		restTemp.put("http://localhost:8787/emp_stat/completetask", task);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskTitle}")
 	void deleteTaskWithTaskOwner(@PathVariable String taskTitle) {
+		String projectName=services.findProjectName(taskTitle);
 		services.deleteTaskWithTaskOwner(taskTitle);
+		restTemp.delete("http://localhost:8787/project/"+projectName);
 	}
 	
 }
