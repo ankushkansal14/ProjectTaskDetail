@@ -28,6 +28,19 @@ public class Tasks {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+	
+	public Tasks(String projectName, String taskName, String taskOwner, String taskDetails, String startDate,
+			String endDate, String status, int id) {
+		
+		this.projectName = projectName;
+		this.taskName = taskName;
+		this.taskOwner = taskOwner;
+		this.taskDetails = taskDetails;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.status = status;
+		this.id = id;
+	}
 	public String getStatus() {
 		return status;
 	}

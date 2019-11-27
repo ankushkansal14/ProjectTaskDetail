@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ibm.project.bean.Tasks;
 import com.ibm.project.service.TaskDetailsServices;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -36,19 +37,27 @@ public class TaskDetailsController {
 		return services.getAllTasks();
 	}
 	
+	
 	@ApiOperation(value = "Add Tasks" , notes = "hit this url to add task",response = List.class)
+	@HystrixCommand(fallbackMethod = "CannotAddTask")
 	@RequestMapping(method = RequestMethod.POST,value = "/tasks")
-	void addTask(@RequestBody Tasks task) {
+	String addTask(@RequestBody Tasks task) {
 		services.addTask(task);
 		restTemp.put("http://localhost:8787/project",task);
 		restTemp.postForObject("http://localhost:8787/emp_stat", task, String.class);
+		return "";
+	}
+	String CannotAddTask(Tasks task) {
+		return "Cannot Add Task Currently.Sorry For The inconvenience.Please Try Again Later...";
 	}
 
+	
 	@ApiOperation(value = "Get Tasks By Project Name" , notes = "hit this url to get Projects",response = List.class)
 	@RequestMapping("/tasks/{projectName}")
 	Iterable<Tasks> getTaskByProjectName(@PathVariable String projectName){
 		return services.getTaskByProjectName(projectName);
 	}
+	
 	
 	@ApiOperation(value = "Update Task with Task Owner" , notes = "hit this url to update task by task owner",response = List.class)
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/{taskTitle}")
@@ -57,6 +66,7 @@ public class TaskDetailsController {
 		services.updateTaskWithTaskOwner(task,taskTitle);
 	}
 	
+	
 	@ApiOperation(value = "Update Task with Employee" , notes = "hit this url to update task with employee",response = List.class)
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks")
 	void updateTaskWithDeleteEmployee(@RequestBody String employeeName) {
@@ -64,21 +74,33 @@ public class TaskDetailsController {
 		services.updateTaskWithDeleteEmployee(employeeName);
 	}
 	
+	
 	@ApiOperation(value = "Update Task Status" , notes = "hit this url to update task",response = List.class)
+	@HystrixCommand(fallbackMethod = "CannotUpdateTaskStatus")
 	@RequestMapping(method = RequestMethod.PUT,value = "/tasks/status/{taskTitle}")
-	void updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskTitle) {
+	String updateTaskStatus(@RequestBody Tasks task,@PathVariable String taskTitle) {
 		
 		services.updateTaskStatus(task,taskTitle);
 		restTemp.put("http://localhost:8787/project/completetask", task);
 		restTemp.put("http://localhost:8787/emp_stat/completetask", task);
+		return "";
+	}
+	String CannotUpdateTaskStatus(Tasks task,String taskTitle) {
+		return "Cannot Update Task Currently.Sorry For The inconvenience.Please Try Again Later...";
 	}
 	
+	
 	@ApiOperation(value = "Delete Task with Task Owner" , notes = "hit this url to delete task with task owner",response = List.class)
+	@HystrixCommand(fallbackMethod = "CannotDeleteTask")
 	@RequestMapping(method = RequestMethod.DELETE,value = "/tasks/{taskTitle}")
-	void deleteTaskWithTaskOwner(@PathVariable String taskTitle) {
+	String deleteTaskWithTaskOwner(@PathVariable String taskTitle) {
 		String projectName=services.findProjectName(taskTitle);
 		services.deleteTaskWithTaskOwner(taskTitle);
 		restTemp.delete("http://localhost:8787/project/"+projectName);
+		return "";
+	}
+	String CannotDeleteTask(String taskTitle) {
+		return "Cannot Delete Task Currently.Sorry For The inconvenience.Please Try Again Later...";
 	}
 	
 }
