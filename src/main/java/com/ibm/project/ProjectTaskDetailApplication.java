@@ -28,7 +28,6 @@ public class ProjectTaskDetailApplication {
 	}
 
 	@Bean
-	@LoadBalanced
 	RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
@@ -37,14 +36,14 @@ public class ProjectTaskDetailApplication {
 	Docket configureSwagger() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.paths(PathSelectors.ant("/**"))
+				.paths(PathSelectors.any())
 				.build()
 				
 				.apiInfo(new ApiInfo("User API Documentation", 
 						"API for Event Details", 
 						"1.0.0",
 						"Free for users to learn",
-						new Contact("Ankush Kansal", "www.learnjava.com", "ankushkansal14@gmail.com"),
+						new Contact("Ankush Kansala", "www.learnjava.com", "ankushkansal14@gmail.com"),
 						"Free",
 						"www.somecode.com",
 						Collections.emptyList()));
